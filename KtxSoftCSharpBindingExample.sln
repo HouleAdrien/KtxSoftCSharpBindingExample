@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34616.47
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KtxSoftCSharpBindingExample", "KtxSoftCSharpBindingExample\KtxSoftCSharpBindingExample.csproj", "{61E55818-26D2-46DA-972A-2F33B173C41A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KtxSoftCSharpBindingExample", "KtxSoftCSharpBindingExample\KtxSoftCSharpBindingExample.csproj", "{61E55818-26D2-46DA-972A-2F33B173C41A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CSharpKtxSoftwareBindings", "CSharpKtxSoftwareBindings\CSharpKtxSoftwareBindings.csproj", "{70AFD44F-40CF-44C5-8D79-93839D2B95DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{61E55818-26D2-46DA-972A-2F33B173C41A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{61E55818-26D2-46DA-972A-2F33B173C41A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{61E55818-26D2-46DA-972A-2F33B173C41A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{70AFD44F-40CF-44C5-8D79-93839D2B95DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{70AFD44F-40CF-44C5-8D79-93839D2B95DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{70AFD44F-40CF-44C5-8D79-93839D2B95DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{70AFD44F-40CF-44C5-8D79-93839D2B95DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
