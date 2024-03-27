@@ -168,7 +168,7 @@ namespace Obj2Tiles
 
         private static bool TestCreateKTX2FromPNG()
         {
-            string inputFilePath = @"C:\TestInterop\KtxSoftCSharpBindingExample\testktx2\inputTest2.png";
+            string inputFilePath = @"C:\TestInterop\KtxSoftCSharpBindingExample\testktx2\huge.png";
             string outputFilePath = @"C:\TestInterop\KtxSoftCSharpBindingExample\testktx2\resultTest2.ktx2";
 
             if (!File.Exists(inputFilePath))
