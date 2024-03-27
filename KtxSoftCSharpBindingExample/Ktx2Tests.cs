@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 using CommandLine;
 using static CSharpKtxSoftwareBindings.KTXBindingsFunctions;
 using static CSharpKtxSoftwareBindings.KTXBindingsTypes;
+using static CSharpKtxSoftwareBindings.KtxTexture;
+using System.IO.Compression;
+using System.Diagnostics;
 
 
 namespace Obj2Tiles
@@ -165,7 +168,7 @@ namespace Obj2Tiles
 
         private static bool TestCreateKTX2FromPNG()
         {
-            string inputFilePath =  @"C:\TestInterop\KtxSoftCSharpBindingExample\testktx2\inputTest2.png";
+            string inputFilePath = @"C:\TestInterop\KtxSoftCSharpBindingExample\testktx2\inputTest2.png";
             string outputFilePath = @"C:\TestInterop\KtxSoftCSharpBindingExample\testktx2\resultTest2.ktx2";
 
             if (!File.Exists(inputFilePath))
@@ -185,7 +188,7 @@ namespace Obj2Tiles
                 {
                     width = image.Width;
                     height = image.Height;
-                    
+
                     imageData = ImageToByteArray(image);
                 }
                 Console.WriteLine("Input image successfully loaded.");
@@ -210,13 +213,13 @@ namespace Obj2Tiles
                 numFaces = 1,
                 isArray = ktx_bool_t.KTX_FALSE,
                 generateMipmaps = ktx_bool_t.KTX_FALSE,
-            
+
             };
 
             IntPtr ptrToKtxTexture2 = Marshal.AllocHGlobal(IntPtr.Size);
-            Marshal.WriteIntPtr(ptrToKtxTexture2,IntPtr.Zero);
+            Marshal.WriteIntPtr(ptrToKtxTexture2, IntPtr.Zero);
 
-            ktx_error_code_e resultCode = ktxTexture2_Create(createInfo, ktxTextureCreateStorageEnum.KTX_TEXTURE_CREATE_ALLOC_STORAGE,ptrToKtxTexture2);
+            ktx_error_code_e resultCode = ktxTexture2_Create(createInfo, ktxTextureCreateStorageEnum.KTX_TEXTURE_CREATE_ALLOC_STORAGE, ptrToKtxTexture2);
 
             if (resultCode != ktx_error_code_e.KTX_SUCCESS)
             {
@@ -231,13 +234,26 @@ namespace Obj2Tiles
 
                 ktxTexture2 managedTexture = ktxTexture2.ktxTexture2_MarshalFromPointer(texptr);
 
-                
+                managedTexture.vtbl.SetImageFromMemory(texptr, 0, 0, 0, imageData, imageData.Length);
 
-                managedTexture.vtbl.SetImageFromMemory(texptr, 0,0,0, imageData, imageData.Length);
+                ktxBasisParams compressParams = new ktxBasisParams();
+                compressParams.threadCount = 14;
+                compressParams.compressionLevel = 2;
+                compressParams.qualityLevel = 128;
 
-                Marshal.WriteIntPtr(texptr, IntPtr.Zero);
-                //Compress the ktx2 see binding for more info about quality values
-                //ktxTexture2_CompressBasis(texptr, 255);
+                IntPtr paramsptr = Marshal.AllocHGlobal(Marshal.SizeOf(compressParams));
+                Marshal.StructureToPtr(compressParams, paramsptr, false);
+
+                Stopwatch stopwatch = new Stopwatch();
+                stopwatch.Start();
+
+                resultCode = ktxTexture2_CompressBasisEx(texptr, paramsptr);
+
+                stopwatch.Stop();
+
+                Console.WriteLine($"Compression time: {stopwatch.Elapsed:hh\\:mm\\:ss}");
+
+
 
                 if (resultCode == ktx_error_code_e.KTX_SUCCESS)
                 {
@@ -249,16 +265,19 @@ namespace Obj2Tiles
 
                         Console.WriteLine("Texture write failed.");
                         managedTexture.vtbl.Destroy(texptr);
+                        Marshal.FreeHGlobal(paramsptr);
                         Marshal.FreeHGlobal(outputPathPtr);
                         return false;
                     }
 
                     Marshal.FreeHGlobal(outputPathPtr);
+                    Marshal.FreeHGlobal(paramsptr);
                     managedTexture.vtbl.Destroy(texptr);
                 }
                 else
                 {
-                    Console.WriteLine("Input image data copy failed.");
+                    Console.WriteLine("Input image data copy failed." + resultCode);
+                    Marshal.FreeHGlobal(paramsptr);
                     Marshal.FreeHGlobal(outputPathPtr);
                     managedTexture.vtbl.Destroy(texptr);
                     return false;

@@ -2,8 +2,8 @@
 using System;
 
 using ktx_uint8_t = System.Byte;
-using ktx_uint16_t = System.UInt16 ;
-using ktx_int16_t = System.Int16 ;
+using ktx_uint16_t = System.UInt16;
+using ktx_int16_t = System.Int16;
 using ktx_uint32_t = System.UInt32;
 using ktx_int32_t = System.Int32;
 using ktx_uint64_t = System.UInt64;
@@ -165,11 +165,11 @@ namespace CSharpKtxSoftwareBindings
         public struct KtxStream
         {
             public delegate ktx_error_code_e ktxStream_read(KtxStream str, IntPtr dst, ktx_size_t count);
-            public delegate ktx_error_code_e ktxStream_skip(KtxStream str,  ktx_size_t count);
-            public delegate ktx_error_code_e ktxStream_write(KtxStream str, IntPtr src,  ktx_size_t size,  ktx_size_t count);
-            public delegate ktx_error_code_e ktxStream_getpos(KtxStream str,  ref  ktx_off_t  offset);
-            public delegate ktx_error_code_e ktxStream_setpos(KtxStream str,  ktx_off_t offset);
-            public delegate ktx_error_code_e ktxStream_getsize(KtxStream str,  ref ktx_size_t size);
+            public delegate ktx_error_code_e ktxStream_skip(KtxStream str, ktx_size_t count);
+            public delegate ktx_error_code_e ktxStream_write(KtxStream str, IntPtr src, ktx_size_t size, ktx_size_t count);
+            public delegate ktx_error_code_e ktxStream_getpos(KtxStream str, ref ktx_off_t offset);
+            public delegate ktx_error_code_e ktxStream_setpos(KtxStream str, ktx_off_t offset);
+            public delegate ktx_error_code_e ktxStream_getsize(KtxStream str, ref ktx_size_t size);
             public delegate void ktxStream_destruct(KtxStream str);
 
             public ktxStream_read read;
@@ -194,9 +194,9 @@ namespace CSharpKtxSoftwareBindings
     }
 
 
-    public class KtxTexture 
+    public class KtxTexture
     {
-       
+
         protected class_id classId;
         public ktxTexture_vtbl vtbl;
         protected ktxTexture_vvtbl vvtbl;
@@ -237,7 +237,7 @@ namespace CSharpKtxSoftwareBindings
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate ktx_error_code_e PFNKTEXGETIMAGEOFFSET(IntPtr This, ktx_uint32_t level, ktx_uint32_t layer, ktx_uint32_t faceSlice, IntPtr pOffset);
 
-        [UnmanagedFunctionPointer(CallingConvention.StdCall)] 
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate ktx_size_t PFNKTEXGETDATASIZEUNCOMPRESSED(IntPtr This);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
@@ -246,31 +246,31 @@ namespace CSharpKtxSoftwareBindings
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate ktx_error_code_e PFNKTEXITERATELEVELS(IntPtr This, PFNKTXITERCB iterCb, IntPtr userdata);
 
-        [UnmanagedFunctionPointer(CallingConvention.StdCall)] 
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate ktx_error_code_e PFNKTEXITERATELOADLEVELFACES(IntPtr This, PFNKTXITERCB iterCb, IntPtr userdata);
 
-        [UnmanagedFunctionPointer(CallingConvention.StdCall)] 
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate ktx_error_code_e PFNKTEXLOADIMAGEDATA(IntPtr This, ktx_uint8_t[] pBuffer, ktx_size_t bufSize);
 
-        [UnmanagedFunctionPointer(CallingConvention.StdCall)] 
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate ktx_bool_t PFNKTEXNEEDSTRANSCODING(IntPtr This);
 
-        [UnmanagedFunctionPointer(CallingConvention.StdCall)] 
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate ktx_error_code_e PFNKTEXSETIMAGEFROMMEMORY(IntPtr This, ktx_uint32_t level, ktx_uint32_t layer, ktx_uint32_t faceSlice, ktx_uint8_t[] src, ktx_size_t srcSize);
 
-        [UnmanagedFunctionPointer(CallingConvention.StdCall)] 
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate ktx_error_code_e PFNKTEXSETIMAGEFROMSTDIOSTREAM(IntPtr This, ktx_uint32_t level, ktx_uint32_t layer, ktx_uint32_t faceSlice, IntPtr src, ktx_size_t srcSize);
 
-        [UnmanagedFunctionPointer(CallingConvention.StdCall)] 
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate ktx_error_code_e PFNKTEXWRITETOSTDIOSTREAM(IntPtr This, IntPtr dstsstr);
 
-        [UnmanagedFunctionPointer(CallingConvention.StdCall)] 
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate ktx_error_code_e PFNKTEXWRITETONAMEDFILE(IntPtr This, IntPtr dstname);
 
         [UnmanagedFunctionPointer(CallingConvention.StdCall)]
-        public delegate ktx_error_code_e PFNKTEXWRITETOMEMORY(IntPtr This,  IntPtr bytes, IntPtr size);
+        public delegate ktx_error_code_e PFNKTEXWRITETOMEMORY(IntPtr This, IntPtr bytes, IntPtr size);
 
-        [UnmanagedFunctionPointer(CallingConvention.StdCall)] 
+        [UnmanagedFunctionPointer(CallingConvention.StdCall)]
         public delegate ktx_error_code_e PFNKTEXWRITETOSTREAM(IntPtr This, IntPtr dststr);
 
         public struct ktxTexture_vtbl
@@ -363,28 +363,109 @@ namespace CSharpKtxSoftwareBindings
                 throw new ArgumentException("vtblPtr cannot be IntPtr.Zero.");
 
 
-              var vtblNative = Marshal.PtrToStructure<ktxTexture_vtbl_native>(vtblPtr);
+            var vtblNative = Marshal.PtrToStructure<ktxTexture_vtbl_native>(vtblPtr);
 
             ktxTexture_vtbl _vtblManaged = new ktxTexture_vtbl
             {
-                   Destroy = Marshal.GetDelegateForFunctionPointer<PFNKTEXDESTROY>(vtblNative.Destroy),
-                   GetImageOffset = Marshal.GetDelegateForFunctionPointer<PFNKTEXGETIMAGEOFFSET>(vtblNative.GetImageOffset),
-                   GetDataSizeUncompressed = Marshal.GetDelegateForFunctionPointer<PFNKTEXGETDATASIZEUNCOMPRESSED>(vtblNative.GetDataSizeUncompressed),
-                   GetImageSize = Marshal.GetDelegateForFunctionPointer<PFNKTEXGETIMAGESIZE>(vtblNative.GetImageSize),
-                   IterateLevels = Marshal.GetDelegateForFunctionPointer<PFNKTEXITERATELEVELS>(vtblNative.IterateLevels),
-                   IterateLoadLevelFaces = Marshal.GetDelegateForFunctionPointer<PFNKTEXITERATELOADLEVELFACES>(vtblNative.IterateLoadLevelFaces),
-                   NeedsTranscoding = Marshal.GetDelegateForFunctionPointer<PFNKTEXNEEDSTRANSCODING>(vtblNative.NeedsTranscoding),
-                   LoadImageData = Marshal.GetDelegateForFunctionPointer<PFNKTEXLOADIMAGEDATA>(vtblNative.LoadImageData),
-                   SetImageFromMemory = Marshal.GetDelegateForFunctionPointer<PFNKTEXSETIMAGEFROMMEMORY>(vtblNative.SetImageFromMemory),
-                   SetImageFromStdioStream = Marshal.GetDelegateForFunctionPointer<PFNKTEXSETIMAGEFROMSTDIOSTREAM>(vtblNative.SetImageFromStdioStream),
-                   WriteToStdioStream = Marshal.GetDelegateForFunctionPointer<PFNKTEXWRITETOSTDIOSTREAM>(vtblNative.WriteToStdioStream),
-                   WriteToNamedFile = Marshal.GetDelegateForFunctionPointer<PFNKTEXWRITETONAMEDFILE>(vtblNative.WriteToNamedFile),
-                   WriteToMemory = Marshal.GetDelegateForFunctionPointer<PFNKTEXWRITETOMEMORY>(vtblNative.WriteToMemory),
-                   WriteToStream = Marshal.GetDelegateForFunctionPointer<PFNKTEXWRITETOSTREAM>(vtblNative.WriteToStream)
-               };
+                Destroy = Marshal.GetDelegateForFunctionPointer<PFNKTEXDESTROY>(vtblNative.Destroy),
+                GetImageOffset = Marshal.GetDelegateForFunctionPointer<PFNKTEXGETIMAGEOFFSET>(vtblNative.GetImageOffset),
+                GetDataSizeUncompressed = Marshal.GetDelegateForFunctionPointer<PFNKTEXGETDATASIZEUNCOMPRESSED>(vtblNative.GetDataSizeUncompressed),
+                GetImageSize = Marshal.GetDelegateForFunctionPointer<PFNKTEXGETIMAGESIZE>(vtblNative.GetImageSize),
+                IterateLevels = Marshal.GetDelegateForFunctionPointer<PFNKTEXITERATELEVELS>(vtblNative.IterateLevels),
+                IterateLoadLevelFaces = Marshal.GetDelegateForFunctionPointer<PFNKTEXITERATELOADLEVELFACES>(vtblNative.IterateLoadLevelFaces),
+                NeedsTranscoding = Marshal.GetDelegateForFunctionPointer<PFNKTEXNEEDSTRANSCODING>(vtblNative.NeedsTranscoding),
+                LoadImageData = Marshal.GetDelegateForFunctionPointer<PFNKTEXLOADIMAGEDATA>(vtblNative.LoadImageData),
+                SetImageFromMemory = Marshal.GetDelegateForFunctionPointer<PFNKTEXSETIMAGEFROMMEMORY>(vtblNative.SetImageFromMemory),
+                SetImageFromStdioStream = Marshal.GetDelegateForFunctionPointer<PFNKTEXSETIMAGEFROMSTDIOSTREAM>(vtblNative.SetImageFromStdioStream),
+                WriteToStdioStream = Marshal.GetDelegateForFunctionPointer<PFNKTEXWRITETOSTDIOSTREAM>(vtblNative.WriteToStdioStream),
+                WriteToNamedFile = Marshal.GetDelegateForFunctionPointer<PFNKTEXWRITETONAMEDFILE>(vtblNative.WriteToNamedFile),
+                WriteToMemory = Marshal.GetDelegateForFunctionPointer<PFNKTEXWRITETOMEMORY>(vtblNative.WriteToMemory),
+                WriteToStream = Marshal.GetDelegateForFunctionPointer<PFNKTEXWRITETOSTREAM>(vtblNative.WriteToStream)
+            };
 
             return _vtblManaged;
         }
+
+        public enum ktx_pack_uastc_flags
+        {
+            KTX_PACK_UASTC_LEVEL_FASTEST = 0,
+            KTX_PACK_UASTC_LEVEL_FASTER = 1,
+            KTX_PACK_UASTC_LEVEL_DEFAULT = 2,
+            KTX_PACK_UASTC_LEVEL_SLOWER = 3,
+            KTX_PACK_UASTC_LEVEL_VERYSLOW = 4,
+            KTX_PACK_UASTC_MAX_LEVEL = KTX_PACK_UASTC_LEVEL_VERYSLOW,
+            KTX_PACK_UASTC_LEVEL_MASK = 0xF,
+            KTX_PACK_UASTC_FAVOR_UASTC_ERROR = 8,
+            KTX_PACK_UASTC_FAVOR_BC7_ERROR = 16,
+            KTX_PACK_UASTC_ETC1_FASTER_HINTS = 64,
+            KTX_PACK_UASTC_ETC1_FASTEST_HINTS = 128,
+            KTX_PACK_UASTC__ETC1_DISABLE_FLIP_AND_INDIVIDUAL = 256
+        }
+        //Default values come from cpp description
+        [StructLayout(LayoutKind.Sequential)]
+        public struct ktxBasisParams
+        {
+            public ktx_uint32_t structSize;
+            public ktx_bool_t uastc;
+            public ktx_bool_t verbose;
+            public ktx_bool_t noSSE;
+            public ktx_uint32_t threadCount;
+            public ktx_uint32_t compressionLevel;
+            public ktx_uint32_t qualityLevel;
+            public ktx_uint32_t maxEndpoints;
+            public float endpointRDOThreshold;
+            public ktx_uint32_t maxSelectors;
+            public float selectorRDOThreshold;
+            [MarshalAs(UnmanagedType.ByValArray, SizeConst = 4)]
+            public byte[] inputSwizzle;
+            public ktx_bool_t normalMap;
+            public ktx_bool_t separateRGToRGB_A;
+            public ktx_bool_t preSwizzle;
+            public ktx_bool_t noEndpointRDO;
+            public ktx_bool_t noSelectorRDO;
+            public ktx_pack_uastc_flags uastcFlags;
+            public ktx_bool_t uastcRDO;
+            public float uastcRDOQualityScalar;
+            public ktx_uint32_t uastcRDODictSize;
+            public float uastcRDOMaxSmoothBlockErrorScale;
+            public float uastcRDOMaxSmoothBlockStdDev;
+            public ktx_bool_t uastcRDODontFavorSimplerModes;
+            public ktx_bool_t uastcRDONoMultithreading;
+
+
+
+            public ktxBasisParams()
+            {
+                structSize = (uint)Marshal.SizeOf(typeof(ktxBasisParams));
+                uastc = 0;
+                verbose = 0;
+                noSSE = 0;
+                threadCount = 1;
+                compressionLevel = 2; // Assuming this as a default because it is the classic compression level
+                qualityLevel = 128;
+                maxEndpoints = 0;
+                endpointRDOThreshold = 1.25f;
+                maxSelectors = 0;
+                selectorRDOThreshold = 1.5f;
+                inputSwizzle = new byte[4]; // Adjust as necessary no particular values described
+                normalMap = 0;
+                separateRGToRGB_A = 0;
+                preSwizzle = 0;
+                noEndpointRDO = 0;
+                noSelectorRDO = 0;
+                uastcFlags = 0; // Adjust as necessary no particular values described
+                uastcRDO = 0;
+                uastcRDOQualityScalar = 1.0f;
+                uastcRDODictSize = 4096;
+                uastcRDOMaxSmoothBlockErrorScale = 10.0f;
+                uastcRDOMaxSmoothBlockStdDev = 18.0f;
+                uastcRDODontFavorSimplerModes = 0;
+                uastcRDONoMultithreading = 0;
+            }
+        }
+
+
+
     }
 
     public class KtxTexture1 : KtxTexture
@@ -399,7 +480,7 @@ namespace CSharpKtxSoftwareBindings
         public struct ktxTexture1_private { }
     }
 
-    
+
     public class ktxTexture2 : KtxTexture
     {
         public ktx_uint32_t vkFormat;
@@ -426,7 +507,7 @@ namespace CSharpKtxSoftwareBindings
 
             if (ktxnativeTexture.vtbl != IntPtr.Zero)
             {
-                outputText.vtbl =  PopulateVTable(ktxnativeTexture.vtbl);
+                outputText.vtbl = PopulateVTable(ktxnativeTexture.vtbl);
             }
 
             if (ktxnativeTexture.vvtbl != IntPtr.Zero)
@@ -459,15 +540,15 @@ namespace CSharpKtxSoftwareBindings
 
 
             ktxTexture2_native ktx2nativeTexture = Marshal.PtrToStructure<ktxTexture2_native>(ptr);
-    
+
             outputText.vkFormat = ktx2nativeTexture.vkFormat;
             outputText.pDfd = ktx2nativeTexture.pDfd;
             outputText.supercompressionScheme = ktx2nativeTexture.supercompressionScheme;
-            outputText.isVideo  = ktx2nativeTexture.isVideo;
+            outputText.isVideo = ktx2nativeTexture.isVideo;
             outputText.duration = ktx2nativeTexture.duration;
             outputText.timescale = ktx2nativeTexture.timescale;
             outputText.loopcount = ktx2nativeTexture.loopcount;
-            
+
             return outputText;
         }
     }
@@ -478,7 +559,7 @@ namespace CSharpKtxSoftwareBindings
         public class_id classId;
         public IntPtr vtbl;
         public IntPtr vvtbl;
-        public IntPtr _protected; 
+        public IntPtr _protected;
         public ktx_bool_t isArray;
         public ktx_bool_t isCubemap;
         public ktx_bool_t isCompressed;

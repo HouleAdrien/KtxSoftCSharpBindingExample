@@ -66,6 +66,10 @@ namespace CSharpKtxSoftwareBindings
       */
         [DllImport(KtxDll, CallingConvention = CallingConvention.StdCall)]
         public static extern ktx_error_code_e ktxTexture2_CompressBasis(IntPtr This, ktx_uint32_t quality);
+
+
+        [DllImport(KtxDll, CallingConvention = CallingConvention.StdCall)]
+        public static extern ktx_error_code_e ktxTexture2_CompressBasisEx(IntPtr This, IntPtr ktxparams);
     }
 
 
